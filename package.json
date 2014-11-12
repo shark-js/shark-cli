@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "shark-cli =========",
   "main": "index.js",
-  "bin": "bin/shark",
+  "bin": {
+	  "shark": "bin/shark"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
