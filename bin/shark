@@ -7,7 +7,6 @@ var Liftoff = require('liftoff');
 var cli = new Liftoff({
   name: 'shark',
   configName: 'sharkfile',
-  nodeFlags: ['--harmony']
 });
 
 cli.launch({
@@ -17,5 +16,19 @@ cli.launch({
 		throw new Error('modulePath not found', env.modulePath);
 	}
 
-    var sharkFile = require(env.configPath);
+	var sf = require('setflags');
+    var sharkFile = sf.harmonyRequire(env.configPath, [
+	    '--harmony-generators',
+	    '--harmony_scoping',
+	    '--harmony_modules',
+	    '--harmony_symbols',
+	    '--harmony_proxies',
+	    '--harmony_collections',
+	    '--harmony_iteration',
+	    '--harmony_numeric_literals',
+	    '--harmony_strings',
+	    '--harmony_arrays',
+	    '--harmony_maths',
+	    '--harmony_promises'
+    ]);
 });

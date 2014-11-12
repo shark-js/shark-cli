@@ -4,7 +4,7 @@
   "description": "shark-cli =========",
   "main": "index.js",
   "bin": {
-	  "shark": "bin/shark"
+    "shark": "bin/shark"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/shark-js/shark-cli",
   "dependencies": {
-    "liftoff": "^0.13.6"
+    "liftoff": "^0.13.6",
+    "setflags": "0.0.2"
   },
   "engines": {
     "node": ">=0.11.14 <0.12",
