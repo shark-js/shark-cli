@@ -5,30 +5,31 @@
 var Liftoff = require('liftoff');
 
 var cli = new Liftoff({
-  name: 'shark',
-  configName: 'sharkfile',
+	name: 'shark',
+	configName: 'sharkfile',
 });
 
 cli.launch({
 
 }, function(env) {
-	if (!env.modulePath) {
-		throw new Error('modulePath not found', env.modulePath);
+	if (!env.configPath) {
+		console.error('configPath not found "%s"', env.configPath);
+		return;
 	}
 
 	var sf = require('setflags');
-    var sharkFile = sf.harmonyRequire(env.configPath, [
-	    '--harmony-generators',
-	    '--harmony_scoping',
-	    '--harmony_modules',
-	    '--harmony_symbols',
-	    '--harmony_proxies',
-	    '--harmony_collections',
-	    '--harmony_iteration',
-	    '--harmony_numeric_literals',
-	    '--harmony_strings',
-	    '--harmony_arrays',
-	    '--harmony_maths',
-	    '--harmony_promises'
-    ]);
+	var sharkFile = sf.harmonyRequire(env.configPath, [
+		'--harmony-generators',
+		'--harmony_scoping',
+		'--harmony_modules',
+		'--harmony_symbols',
+		'--harmony_proxies',
+		'--harmony_collections',
+		'--harmony_iteration',
+		'--harmony_numeric_literals',
+		'--harmony_strings',
+		'--harmony_arrays',
+		'--harmony_maths',
+		'--harmony_promises'
+	]);
 });
