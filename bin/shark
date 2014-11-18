@@ -2,21 +2,59 @@
 
 'use strict';
 
-var Liftoff = require('liftoff');
+process.title = 'shark';
 
-var cli = new Liftoff({
-	name: 'shark',
-	configName: 'sharkfile',
-	nodeFlags: ['--harmony']
-});
+var fs    = require('fs');
+var path  = require('path');
+var spawn = require('child_process').spawn;
+var cwd   = process.cwd;
 
-cli.launch({
+var configFile  = 'sharkfile.js';
 
-}, function(env) {
-	if (!env.configPath) {
-		console.error('configPath not found "%s"', env.configPath);
-		return;
-	}
+function findConfigFilePathRecursive(dir) {
+  var files = fs.readdirSync(dir);
+  var configFileFound = files.indexOf(configFile) !== -1;
 
-	require(env.configPath);
-});
+  if (configFileFound) {
+    return path.join(dir, configFile);
+  }
+  else {
+    var inRoot = ['.', '/'].indexOf(dir) !== -1;
+
+    if (inRoot) {
+      return null;
+    }
+    else {
+      return findConfigFilePathRecursive(path.dirname(dir));
+    }
+  }
+};
+
+function spawnHarmonyProcess(configFilePath) {
+  var argv = process.argv;
+  var child = spawn(argv[0], ['--harmony', configFilePath].concat(argv.slice(2)), { stdio: 'inherit' });
+
+  child.on('exit', function (code, signal) {
+    process.on('exit', function () {
+      if (signal) {
+        process.kill(process.pid, signal);
+      } else {
+        process.exit(code);
+      }
+    });
+  });
+}
+
+function run() {
+  var configFilePath = findConfigFilePathRecursive(cwd());
+
+  if (configFilePath) {
+    process.chdir(path.dirname(configFilePath));
+    spawnHarmonyProcess(configFilePath);
+  }
+  else {
+    console.error(configFile, 'not found');
+  }
+}
+
+run();
