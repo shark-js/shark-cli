@@ -9,7 +9,7 @@ var spawnHarmonyProcess   = require('../lib/spawn-harmony-process');
 var isNodeVersionValid    = require('../lib/check-node-version');
 
 if (!isNodeVersionValid(0, 11, 14)) {
-  console.error('Shark requires Node >=0.11.14, current version is', process.version);
+  console.error('Shark requires Node >=0.11.14, current version is', process.versions.node);
   process.exit(1);
 }
 
