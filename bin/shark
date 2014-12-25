@@ -7,6 +7,7 @@ process.title = 'shark';
 var findFilePathRecursive = require('../lib/find-recursive');
 var spawnHarmonyProcess   = require('../lib/spawn-harmony-process');
 var isNodeVersionValid    = require('../lib/check-node-version');
+var createConfigFile      = require('../lib/create-config-file');
 
 if (!isNodeVersionValid(0, 11, 14)) {
   console.error('Shark requires Node >=0.11.14, current version is', process.versions.node);
@@ -16,9 +17,16 @@ if (!isNodeVersionValid(0, 11, 14)) {
 var configFileName = 'sharkfile.js';
 var configFilePath = findFilePathRecursive(process.cwd(), configFileName);
 
-if (configFilePath) {
-  spawnHarmonyProcess(configFilePath);
+if (createConfigFile.creationRequested()) {
+  createConfigFile.create(configFileName);
 }
 else {
-  console.error(configFileName, 'not found');
+  if (configFilePath) {
+    spawnHarmonyProcess(configFilePath);
+  }
+  else {
+    console.error(configFileName, 'not found');
+  }
 }
+
+
