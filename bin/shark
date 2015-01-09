@@ -11,15 +11,8 @@ var isCoreInstalled       = require('../lib/check-core-installed');
 var createConfigFile      = require('../lib/create-config-file');
 var info                  = require('../lib/info');
 
-if (info.helpRequested()) {
-  console.log(info.version());
-  console.log('');
-  console.log(info.help());
-  process.exit();
-}
-
-if (info.versionRequested()) {
-  console.log(info.version());
+if (info.requested()) {
+  info.show();
   process.exit();
 }
 
