@@ -7,7 +7,7 @@ process.title = 'shark';
 var findFilePathRecursive = require('../lib/find-recursive');
 var spawnHarmonyProcess   = require('../lib/spawn-harmony-process');
 var isNodeVersionValid    = require('../lib/check-node-version');
-var isLocalSharkInstalled = require('../lib/check-local-shark');
+var isCoreInstalled       = require('../lib/check-core-installed');
 var createConfigFile      = require('../lib/create-config-file');
 var info                  = require('../lib/info');
 
@@ -29,13 +29,6 @@ if (!isNodeVersionValid(0, 11, 14)) {
   process.exit(1);
 }
 
-if (!isLocalSharkInstalled()) {
-  console.log(info.version());
-  console.error('\nFatal error: Unable to find local shark.');
-  console.info('\nNote: Check if you have installed `shark-core` module in current project root folder.');
-  process.exit(1);
-}
-
 var configFileName = 'sharkfile.js';
 var configFilePath = findFilePathRecursive(process.cwd(), configFileName);
 
@@ -44,10 +37,15 @@ if (createConfigFile.creationRequested()) {
 }
 else {
   if (configFilePath) {
-    spawnHarmonyProcess(configFilePath);
+    if (isCoreInstalled()) {
+      spawnHarmonyProcess(configFilePath);
+    }
+    else {
+      console.error('Unable to find local shark-core module. Try install it with command: npm install shark-core --save');
+    }
   }
   else {
-    console.error(configFileName, 'not found');
+    console.error('Unable to find', configFileName, 'You can create it manually or with command: shark --create-sharkfile');
   }
 }
 
