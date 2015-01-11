@@ -4,6 +4,7 @@
 
 process.title = 'shark';
 
+var path                  = require('path');
 var findFilePathRecursive = require('../lib/find-recursive');
 var spawnHarmonyProcess   = require('../lib/spawn-harmony-process');
 var isNodeVersionValid    = require('../lib/check-node-version');
@@ -30,7 +31,7 @@ if (createConfigFile.creationRequested()) {
 }
 else {
   if (configFilePath) {
-    if (isCoreInstalled()) {
+    if (isCoreInstalled(path.dirname(configFilePath))) {
       spawnHarmonyProcess(configFilePath);
     }
     else {
