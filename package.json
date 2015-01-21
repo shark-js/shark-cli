@@ -29,5 +29,11 @@
     "lib",
     "README.md",
     "LICENCE"
-  ]
+  ],
+  "dependencies": {
+    "co": "^4.1.0",
+    "extsprintf": "^1.2.1",
+    "inquirer": "^0.8.1",
+    "tabtab": "0.0.2"
+  }
 }
