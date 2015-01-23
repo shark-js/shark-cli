@@ -31,6 +31,7 @@
     "LICENCE"
   ],
   "dependencies": {
+    "chalk": "^0.5.1",
     "co": "^4.1.0",
     "extsprintf": "^1.2.1",
     "inquirer": "^0.8.0",
