@@ -8,5 +8,5 @@ if (process.execArgv.indexOf('--harmony') === -1) {
   require('../lib/spawn-harmony-process')();
 }
 else {
-  require('../lib/cli.js');
+  require('../lib/cli.js')();
 }
