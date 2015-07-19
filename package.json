@@ -23,7 +23,6 @@
     "node": ">=0.11.14",
     "npm": ">=2.1.5"
   },
-  "engineStrict": true,
   "files": [
     "bin",
     "lib",
